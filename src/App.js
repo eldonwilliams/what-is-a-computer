@@ -2,6 +2,7 @@ import { Paper } from '@mui/material';
 import { useState } from 'react';
 import SlideDisplay from './SlideDisplay';
 import SlideTabs from './SlideTabs';
+import './App.css';
 
 const slides = [
   {
@@ -31,6 +32,10 @@ const slides = [
   {
     "label": "Power Supply",
     "content": "The Power Supply of a computer is like your stomach. It provides energy to all components which need it. They're often very inexpensive and not that complex, but they're important!",
+  },
+  {
+    "label": "Uses",
+    "content": "The four major uses of a computer are taking inputs, storing data, processing data, and generating outputs. The way computers do this can vary a lot, but they all do those 4 functions in some way.",
   },
 ]
 
