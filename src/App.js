@@ -1,4 +1,4 @@
-import { Paper } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 import { useState } from 'react';
 import SlideDisplay from './SlideDisplay';
 import SlideTabs from './SlideTabs';
@@ -55,6 +55,7 @@ const App = () => {
     </Paper>
     
     <SlideDisplay currentSlide={currentSlide} slides={slides} setSlide={setCurrentSlide} />
+    <Typography sx={{ 'position': 'absolute', 'bottom': '10px', }}>Wanna see how this was <a href="https://github.com/eldonwilliams/what-is-a-computer">made</a>?</Typography>
   </div>)
 };
 
