@@ -50,7 +50,7 @@ const App = () => {
     alignItems: 'center',
     gap: '10vh',
   }}>
-    <Paper elevation={1}>
+    <Paper elevation={1} sx={{ 'maxWidth': '90vw', }}>
       <SlideTabs slides={slides} slide={currentSlide} setSlide={setSlide} />
     </Paper>
     
