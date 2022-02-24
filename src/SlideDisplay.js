@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 const transition = {
     type: 'spring',
     duration: 0.25,
+    bounce: 1.5,
 }
 
 const iconVariants = {
@@ -44,9 +45,9 @@ const Slide = ({ slides, currentSlide, handleNext, handlePrevious, slide, index 
 
     return (<AnimatePresence>
         {currentSlide === index && <motion.div
-            initial={{ opacity: 0, scale: 0.75, }}
-            animate={{ opacity: 1, scale: 1, }}
-            exit={{ opacity: 0, scale: 0.75, }}
+            initial={{ opacity: 0, scale: 0.75, filter: 'blur(4px)', zIndex: -1, }}
+            animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', zIndex: 1, }}
+            exit={{ opacity: 0, scale: 0.75, filter: 'blur(4px)', zIndex: -1, }}
             drag="x"
             dragConstraints={{ 'left': 0, 'right': 0, 'top': 0, 'bottom': 0, }}
             style={{
