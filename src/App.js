@@ -3,6 +3,7 @@ import { useState } from 'react';
 import SlideDisplay from './SlideDisplay';
 import SlideTabs from './SlideTabs';
 import './App.css';
+import useEventfulEffect from './hooks/useEventfulEffect';
 
 const slides = [
   {
@@ -43,6 +44,13 @@ const App = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const setSlide = (event, newValue) => setCurrentSlide(newValue);
+
+  useEventfulEffect((connectEvent) => {
+    connectEvent(window, 'keydown', (event) => {
+      if (event.code === "ArrowLeft" && currentSlide - 1 >= 0) setCurrentSlide(currentSlide - 1);
+      if (event.code === "ArrowRight" && currentSlide + 1 < slides.length) setCurrentSlide(currentSlide + 1); 
+    });
+  }, [currentSlide]);
 
   return (<div style={{
     display: 'flex',
