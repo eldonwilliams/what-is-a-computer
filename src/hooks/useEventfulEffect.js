@@ -1,11 +1,19 @@
 import { useEffect } from "react";
 
 /**
- * == Custom written for what-is-a-computer ==
+ * Handles the connection of a listener to some object using "addEventListener"
+ * Whatever argument is passed for object must have a addEventListener that is callable
+ * @typedef {Function} ConnectListener
+ * @function
+ * @param {Object} object 
+ * @param {string} eventName 
+ * @param {Function} listener 
+ */
+
+/**
  * This is a wrapper around the normal useEffect callback which allows you to return a list of event connections and eventful-effect will handle them automagically.
- * @param {() => Array<Array<Object | Function> | Function>} callback 
+ * @param {(connectListener: function(object: Object, eventName: string, listener: Function)) => any} callback 
  * @param {import('react').DependencyList} deps
- * @param {Object} [defaultConnector]
  * @example
  *   // The following example shows a basic use-case of eventful-effect
  *   useEventfulEffect(() => {
@@ -14,24 +22,22 @@ import { useEffect } from "react";
  *      return [[window, keydownHandler]]; // The keydownHandler will automatically be disconnected from window (or default connector)
  *   }, []);
  */
-const useEventfulEffect = (callback, deps, defaultConnector) => {
+const useEventfulEffect = (callback, deps) => {
     useEffect(() => {
         const connections = [];
         // This function is passed to the callback so that we can track what object and events are connected
         /**
-         * @param {Object} object 
-         * @param {string} eventName 
-         * @param {Function} listener 
+         * @type {ConnectListener}
          */
-        const connectEvent = (object, eventName, listener) => {
+        const connectListener = (object, eventName, listener) => {
             object.addEventListener(eventName, listener);
             connections.push([object, eventName, listener]);
         }
 
-        callback(connectEvent);
+        callback(connectListener);
 
-        return () => connections.forEach((value) => value.object.removeEventListener(value.eventName, value.listener));
-    });
+        return () => connections.forEach((value) => value[0].removeEventListener(value[1], value[2]));
+    }, deps);
 };
 
 export default useEventfulEffect;
