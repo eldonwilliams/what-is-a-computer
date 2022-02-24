@@ -16,16 +16,22 @@ import { useEffect } from "react";
  */
 const useEventfulEffect = (callback, deps, defaultConnector) => {
     useEffect(() => {
-        const disconnections = callback();
-        return () => disconnections.forEach((value) => {
-            if (typeof value === "object") {
-                // Is array with [Object, Function]
-            } else if (typeof value === "function") {
-                // Is a function (defaultConnector)
-                defaultConnector.removeEventHandler();
-            }
-        });
-    }, [...deps]);
+        const connections = [];
+        // This function is passed to the callback so that we can track what object and events are connected
+        /**
+         * @param {Object} object 
+         * @param {string} eventName 
+         * @param {Function} listener 
+         */
+        const connectEvent = (object, eventName, listener) => {
+            object.addEventListener(eventName, listener);
+            connections.push([object, eventName, listener]);
+        }
+
+        callback(connectEvent);
+
+        return () => connections.forEach((value) => value.object.removeEventListener(value.eventName, value.listener));
+    });
 };
 
 export default useEventfulEffect;
