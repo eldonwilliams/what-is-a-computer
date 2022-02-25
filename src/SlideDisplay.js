@@ -12,7 +12,6 @@ import { useEffect, useState } from "react";
 const transition = {
     type: 'spring',
     duration: 0.25,
-    bounce: 1.5,
 }
 
 const iconVariants = {
