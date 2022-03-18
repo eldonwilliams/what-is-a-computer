@@ -61,7 +61,7 @@ const Slide = ({ slides, currentSlide, handleNext, handlePrevious, slide, index 
                 x,
                 'position': 'absolute',
                 'top': '25%', 'width': 'content',
-                'maxWidth': '300px', 'height': 'content',
+                'maxWidth': '30vw', 'height': 'content',
                 'y': height,
             }}
             onDragEnd={dragEnd}
@@ -70,7 +70,7 @@ const Slide = ({ slides, currentSlide, handleNext, handlePrevious, slide, index 
                 elevation={5}
                 sx={{ 'padding': '10px', }}
             >
-                <Typography variant="h5"><b>{slide.label}</b></Typography><br/>
+                <Typography variant="h5"><b>{slide.title ? slide.title : slide.label}</b></Typography><br/>
                 <Typography>{slide.content}</Typography><br/>
                 <Stack
                     direction="row"
