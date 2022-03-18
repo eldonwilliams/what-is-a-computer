@@ -5,8 +5,8 @@ const Slide = ({ slides, currentSlide, handleNext, handlePrevious, slide, index 
 
     return (<Motion defaultStyle={{'opacity': 0}} style={{ 'opacity': spring(currentSlide === index ? 1 : 0, { 'stiffness': 250, 'damping': 22.5, }), }}>
         {(style) => (<Paper sx={{ 'position': 'absolute', 'top': '15%', 'width': 'content', 'maxWidth': '300px', 'height': 'content', 'padding': '10px', 'opacity': style.opacity, 'transform': `scale(${style.opacity})`, }} elevation={5}>
-            <Typography variant="h5"><b>{slide.label}</b></Typography><br/>
-            <Typography>{slide.content}</Typography><br/>
+            <Typography variant="h5"><b>{slide.title ? slide.title : slide.label}</b></Typography><br/>
+            {typeof slide.content === "string" ? <Typography>{slide.content}</Typography> : slide.content}<br/>
             <ButtonGroup>
                 <Button onClick={handlePrevious} disabled={(slides.length - 1 === currentSlide && currentSlide === 0) || currentSlide === 0}>Previous</Button>
                 <Button onClick={handleNext} variant="contained" disabled={slides.length - 1 === currentSlide}>Next</Button>
