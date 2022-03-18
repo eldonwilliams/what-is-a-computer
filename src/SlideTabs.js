@@ -1,5 +1,4 @@
 import { Box, Tab, Tabs } from "@mui/material";
-import { useState } from "react";
 
 const SlideTabs = ({ slides, slide, setSlide, }) => {
   return (<Box sx={{ width: '100%', }}>

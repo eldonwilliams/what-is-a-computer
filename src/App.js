@@ -7,37 +7,35 @@ import useEventfulEffect from './hooks/useEventfulEffect';
 
 const slides = [
   {
-    "label": "CPU",
-    "content": "The CPU is the \"Brain\" of the computer. The CPU is really good at doing math, fast.",
+    "label": "Creation",
+    "title": "How was Eldon Slides made?",
+    "content": <Typography>Ms. Gary has asked that I cover the following topics in this presentation...<ul><li>The Software Used</li><li>How It Works</li><li>How To Use it</li></ul></Typography>,
   },
   {
-    "label": "RAM",
-    "content": "The RAM, or Random Access Memory, is the part of the computer which remembers things short-term.",
+    "label": "Software",
+    "title": "What software did I use?",
+    "content": <Typography>Eldon Slides' primary stack consists of the following...<ul><li>React and JavaScript for creating the website</li><li>GalaxyGate and Porkbun for hosting</li><li>GitHub for hosting the SourceCode</li><li>Framer-Motion and MUI for design</li></ul></Typography>,
   },
   {
-    "label": "Hard Drive",
-    "content": "The Hard Drive is used to save picture, games, and other big files. The Hard Drive has a lot more space than the RAM which is why you want to use it for bigger files.",
+    "label": "How",
+    "title": "How does Eldon Slides work?",
+    "content": <Typography><ul><li>Slide information is hard-coded<ul><li>You have to code to make a slide</li></ul></li><li>Eldon Slides is not meant for everyone to use</li><li>However, The code is open-sourced</li></ul></Typography>,
   },
   {
-    "label": "Motherboard",
-    "content": "The Motherboard connects all the other parts of the computer. It holds the CPU, RAM, GPU, and most major components.",
+    "label": "Using it",
+    "title": "How do I create a Eldon Slide?",
+    "content": <Typography>It may sound easy, but it is not.<ul><li>Fork the GitHub</li><li>Open in VSCode</li><li>Edit the slides variable in App.js</li><li>Build app and host</li></ul></Typography>,
   },
   {
-    "label": "GPU",
-    "content": "The GPU is useful for rendering video games. It can handle the math that each pixel needs for realistic games. GPUs are also useful for rendering videos when editing.",
+    "label": "Favorite Thing",
+    "title": "Okay, so what is my favorite thing?",
+    "content": <Typography>My favorite thing is TypeScript!<ul><li>TypeScript makes coding faster</li><li>TypeScript is very enjoyable to use</li><li>However, you do run into type errors a lot</li></ul></Typography>,
   },
   {
-    "label": "Case",
-    "content": "The Case of a computer is like your skin. It holds all the components together and allows you to transport them without breaking them.",
-  },
-  {
-    "label": "Power Supply",
-    "content": "The Power Supply of a computer is like your stomach. It provides energy to all components which need it. They're often very inexpensive and not that complex, but they're important!",
-  },
-  {
-    "label": "Uses",
-    "content": "The four major uses of a computer are taking inputs, storing data, processing data, and generating outputs. The way computers do this can vary a lot, but they all do those 4 functions in some way.",
-  },
+    "label": "TypeScript?",
+    "title": "What is TypeScript?",
+    "content": <Typography>TypeScript is like JavaScript, however...<ul><li>TypeScript has specified types</li><li>Code autocomplete is much better</li><li>Makes JSDoc redundant</li></ul></Typography>
+  }
 ]
 
 const App = () => {
