@@ -1,7 +1,8 @@
-import { Paper, Typography } from '@mui/material';
-import { useState } from 'react';
+import { Paper, Typography, Button } from '@mui/material';
+import { useState, useEffect } from 'react';
 import SlideDisplay from './SlideDisplay';
 import SlideTabs from './SlideTabs';
+import { motion, useMotionValue, useTransform } from "framer-motion";
 import './App.css';
 import useEventfulEffect from './hooks/useEventfulEffect';
 
@@ -38,8 +39,21 @@ const slides = [
   }
 ]
 
+const MotionButton = motion(Button);
+const BottomCallout = ({ biggify, }) => {
+  const [currentBiggify, setBiggify] = biggify;
+  const y = useMotionValue(0);
+  const opacity = useTransform(y, [0, -10, -80], [0, 0, 1]);
+
+  return (<Typography sx={{ 'position': 'absolute', 'bottom': '10px', 'display': 'flex', 'alignItems': 'center', 'flexDirection': 'column', }}>
+    <MotionButton variant="contained" onClick={() => setBiggify(!currentBiggify)} style={{ opacity: opacity, scale: opacity, }} sx={{ width: 'min-content', }}>Biggify</MotionButton>
+    <motion.div drag="y" style={{ y, }} dragConstraints={{ 'bottom': 0, 'top': -80, }} dragElastic={0}>Wanna see how this was <a href="https://github.com/eldonwilliams/what-is-a-computer">made</a>?</motion.div>
+  </Typography>);
+}
+
 const App = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const biggify = useState(false);
 
   const setSlide = (event, newValue) => setCurrentSlide(newValue);
 
@@ -60,8 +74,8 @@ const App = () => {
       <SlideTabs slides={slides} slide={currentSlide} setSlide={setSlide} />
     </Paper>
     
-    <SlideDisplay currentSlide={currentSlide} slides={slides} setSlide={setCurrentSlide} />
-    <Typography sx={{ 'position': 'absolute', 'bottom': '10px', }}>Wanna see how this was <a href="https://github.com/eldonwilliams/what-is-a-computer">made</a>?</Typography>
+    <SlideDisplay biggify={biggify} currentSlide={currentSlide} slides={slides} setSlide={setCurrentSlide} />
+    <BottomCallout biggify={biggify} />
   </div>)
 };
 

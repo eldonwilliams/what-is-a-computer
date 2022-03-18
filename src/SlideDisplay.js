@@ -1,10 +1,10 @@
-import { Button, ButtonGroup, Paper, Stack, Typography } from "@mui/material";
+import { Button, ButtonGroup, Modal, Paper, Slider, Stack, Typography } from "@mui/material";
 import { AnimatePresence, motion, useMotionValue, useTransform } from "framer-motion";
 import CheckIcon from '@mui/icons-material/Check';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import BlockIcon from '@mui/icons-material/Block';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
-import { useEffect, useState } from "react";
+import React, { createElement, useEffect, useState } from "react";
 
 /**
  * @type {import("framer-motion").Transition}
@@ -46,10 +46,6 @@ const Slide = ({ slides, currentSlide, handleNext, handlePrevious, slide, index 
         setSignalState(x.get() === 0 ? 0 : (x.get() > 50 || x.get() < -50 ? 1 : 2));
     }), []);
 
-    useEffect(() => {
- 
-    }, [signalState]);
-
     return (<AnimatePresence>
         {currentSlide === index && <motion.div
             initial={{ opacity: 0, scale: 0.75, filter: 'blur(4px)', zIndex: -1, }}
@@ -61,8 +57,9 @@ const Slide = ({ slides, currentSlide, handleNext, handlePrevious, slide, index 
                 x,
                 'position': 'absolute',
                 'top': '25%', 'width': 'content',
-                'maxWidth': '30vw', 'height': 'content',
+                'maxWidth': '750px', 'height': 'content',
                 'y': height,
+                'pointerEvents': 'all',
             }}
             onDragEnd={dragEnd}
         >
@@ -140,7 +137,10 @@ const Slide = ({ slides, currentSlide, handleNext, handlePrevious, slide, index 
     </AnimatePresence>);
 }
 
-const SlideDisplay = ({ slides, currentSlide, setSlide, }) => {
+const Slides = ({ slides, currentSlide, handleNext, handlePrevious, }) => slides.map((slide, index) => (<Slide index={index} key={index} slides={slides} currentSlide={currentSlide} handleNext={handleNext} handlePrevious={handlePrevious} slide={slide} />))
+
+const MotionModal = motion(Modal);
+const SlideDisplay = ({ slides, currentSlide, setSlide, biggify }) => {
     const handleNext = () => {
         setSlide(currentSlide + 1);
     };
@@ -149,8 +149,47 @@ const SlideDisplay = ({ slides, currentSlide, setSlide, }) => {
         setSlide(currentSlide - 1);
     };
 
+    const [currentBiggify, setBiggify] = biggify;
+    const [biggifyAmount, setBiggifyAmount] = useState(1.65);
+
     return (<>
-        {slides.map((slide, index) => (<Slide index={index} key={index} slides={slides} currentSlide={currentSlide} handleNext={handleNext} handlePrevious={handlePrevious} slide={slide} />))}
+        <AnimatePresence exitBeforeEnter initial={true}>
+            {currentBiggify && <MotionModal
+                open={true}
+                onClose={() => setBiggify(false)}
+                initial={{ opacity: 0, }}
+                animate={{ opacity: 1, }}
+                exit={{opacity: 0, transition: { duration: 0.25, }}}
+            >
+                <motion.div
+                    style={{
+                        "width": "100%",
+                        "height": "100%",
+                        "display": "flex",
+                        "justifyContent": "center",
+                        "pointerEvents": "none"
+                    }}
+                >
+                    <motion.div
+                        initial={{ scale: 1, }}
+                        whileInView={{ opacity: 1, transition: { delay: 0.6, }}}
+                        animate={{ scale: biggifyAmount, }}
+                        exit={{ scale: 1, }}
+                        style={{
+                            "width": "100%",
+                            "height": "100%",
+                            "display": "flex",
+                            "justifyContent": "center",
+                            "pointerEvents": "none"
+                        }}
+                    >
+                        <Slides slides={slides} currentSlide={currentSlide} handleNext={handleNext} handlePrevious={handlePrevious}/>
+                    </motion.div>
+                    <Slider sx={{ 'pointerEvents': 'all', 'position': 'absolute', 'bottom': '5%', 'width': "50%", }} value={biggifyAmount} step={0.01} min={1} max={2} onChange={(e, newValue) => setBiggifyAmount(newValue)} valueLabelDisplay="auto" />
+                </motion.div>
+            </MotionModal>}
+        </AnimatePresence>
+        {!currentBiggify && <Slides slides={slides} currentSlide={currentSlide} handleNext={handleNext} handlePrevious={handlePrevious} />}
     </>)
 };
 
